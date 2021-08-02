@@ -1,7 +1,5 @@
 package Graph;
 
-import Exceptions.DuplicateItemException;
-
 public class Test {
     public static void main(String[] args) throws Exception {
         Graph<Integer, Integer> graph = new Graph<Integer, Integer>();
@@ -13,7 +11,7 @@ public class Test {
             graph.insertVertex(20);
             System.out.println(graph);
         }
-        catch(DuplicateItemException e) {
+        catch(Exception e) {
             System.out.println(e.getMessage());
         }
         
@@ -27,5 +25,14 @@ public class Test {
             System.out.println(e.getMessage());
         }
         System.out.println(graph);
+        graph.removeVertex(20);
+        System.out.println(graph);
+        try {
+            
+        }
+        catch(Exception e) {
+            graph.removeVertex(10);
+            System.out.println(graph);
+        }
     }
 }

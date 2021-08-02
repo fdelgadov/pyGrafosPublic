@@ -36,8 +36,20 @@ public class Graph<E, F> {
             this.weight = weight;
         }
         
+        public EdgeNode(VertexNode vertex) {
+            this(vertex, null);
+        }
+        
         public String toString() {
             return "(" + this.vertex.value + ", " + this.weight + ")";
+        }
+        
+        public boolean equals(Object o) {
+            EdgeNode other = (EdgeNode) o;
+            if(other.vertex == this.vertex)
+                return true;
+            else
+                return false;
         }
     }
     
@@ -72,6 +84,17 @@ public class Graph<E, F> {
         
         vertex1.adjacents.insertToBegin(new EdgeNode(vertex2, element));
         vertex2.adjacents.insertToBegin(new EdgeNode(vertex1, element));
+    }
+    
+    public void removeVertex(E v) {
+        VertexNode remove = this.vertices.remove(new VertexNode(v));            
+        for(VertexNode vertex : this.vertices) {
+            try {
+                vertex.adjacents.remove(new EdgeNode(remove));
+            }
+            catch(IllegalStateException e) {
+            }
+        }
     }
     
     public String toString() {

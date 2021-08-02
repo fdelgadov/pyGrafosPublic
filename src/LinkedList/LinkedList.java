@@ -60,14 +60,14 @@ public class LinkedList<E> implements Iterable<E> {
         this.count--;
     }
     
-    public void remove(E elemento) throws IllegalStateException {
-        if(isEmpty()) throw new IllegalStateException();
+    public E remove(E elemento) throws IllegalStateException {
+        if(isEmpty()) throw new IllegalStateException("Lista vacía...");
         
         Link actual = this.head;
         Link aux = actual;
         while(!actual.value.equals(elemento)) {
             if(actual.next == null)
-                throw new IllegalStateException();
+                throw new IllegalStateException("No encontrado...");
             aux = actual;
             actual = actual.next;
         }
@@ -76,6 +76,7 @@ public class LinkedList<E> implements Iterable<E> {
         else
             aux.next = actual.next;
         this.count--;
+        return actual.value;
     }
     
     public E headValue(){
