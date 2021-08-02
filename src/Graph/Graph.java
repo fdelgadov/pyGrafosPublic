@@ -1,5 +1,6 @@
 package Graph;
 
+import Exceptions.*;
 import LinkedList.LinkedList;
 
 public class Graph<E, F> {
@@ -13,6 +14,16 @@ public class Graph<E, F> {
         
         public String toString() {
             return this.value + "[" + adjacents + "]";
+        }
+        
+        public boolean equals(Object o) {
+            if(o.getClass() != this.getClass())
+                return false;
+            VertexNode other = (VertexNode) o;
+            if(other.value.equals(this.value))
+                return true;
+            else
+                return false;
         }
     }
     
@@ -35,8 +46,11 @@ public class Graph<E, F> {
     public Graph() {
     }
     
-    public void insertVertex(E element) {
-        vertices.insertToBegin(new VertexNode(element));
+    public void insertVertex(E element) throws DuplicateItemException {
+        VertexNode node = new VertexNode(element);
+        if(vertices.contains(node))
+            throw new DuplicateItemException();
+        vertices.insertToBegin(node);
     }
     
     public String toString() {
