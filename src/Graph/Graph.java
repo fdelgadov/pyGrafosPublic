@@ -1,12 +1,12 @@
 package Graph;
 
 import Exceptions.*;
-import LinkedList.LinkedList;
+import LinkedList.*;
 
 public class Graph<E, F> {
     private class VertexNode {
         public E value;
-        public LinkedList<VertexNode> adjacents = new LinkedList<VertexNode>();
+        public LinkedList<EdgeNode> adjacents = new LinkedList<EdgeNode>();
         
         public VertexNode(E value) {
             this.value = value;
@@ -51,6 +51,24 @@ public class Graph<E, F> {
         if(vertices.contains(node))
             throw new DuplicateItemException();
         vertices.insertToBegin(node);
+    }
+    
+    public void insertEdge(E ver1, E ver2, F element) {
+        VertexNode vertex1 = null, vertex2 = null;
+        
+        for(VertexNode vertex : this.vertices) {
+            if(vertex.value.equals(ver1))
+                vertex1 = vertex;
+            
+            if(vertex.value.equals(ver2))
+                vertex2 = vertex;
+            
+            if(vertex1 != null && vertex2 != null)
+                break;
+
+        }        
+        System.out.println("vertex1: " + vertex1);
+        System.out.println("vertex2: " + vertex2);
     }
     
     public String toString() {

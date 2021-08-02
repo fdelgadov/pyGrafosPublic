@@ -16,5 +16,8 @@ public class Test {
         catch(DuplicateItemException e) {
             System.out.println(e.getMessage());
         }
+        
+        System.out.println("insertEdge(20,30,5)");
+        graph.insertEdge(20, 30, 5);
     }
 }

@@ -1,6 +1,8 @@
 package LinkedList;
 
-public class LinkedList<E> {
+import java.util.Iterator;
+
+public class LinkedList<E> implements Iterable<E> {
     private class Link{
         public E value;
         public Link next;
@@ -16,6 +18,27 @@ public class LinkedList<E> {
             
             return str;
         }
+    }
+    
+    private class LinkedListIterator implements Iterator<E> {
+        Link actual;
+        
+        public LinkedListIterator() {
+            actual = head;
+        }
+        
+        public boolean hasNext() {
+            if(actual == null)
+                return false;
+            return true;
+        }
+
+        public E next() {
+            E aux = this.actual.value;
+            this.actual = actual.next;
+            return aux;
+        }
+        
     }
     
     protected Link head;
@@ -108,10 +131,14 @@ public class LinkedList<E> {
         }
         return Kesimo.value;
     }
-    
+        
     public String toString() {
         String str = "" + this.head; 
         
         return str;
+    }
+
+    public Iterator<E> iterator() {
+        return new LinkedListIterator();
     }
 }
