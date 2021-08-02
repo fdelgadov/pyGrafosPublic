@@ -19,5 +19,12 @@ public class Test {
         
         System.out.println("insertEdge(20,30,5)");
         graph.insertEdge(20, 30, 5);
+        try {
+            System.out.println("insertEdge(20,10,5)");
+            graph.insertEdge(20, 10, 2);
+        }
+        catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

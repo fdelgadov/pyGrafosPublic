@@ -53,7 +53,7 @@ public class Graph<E, F> {
         vertices.insertToBegin(node);
     }
     
-    public void insertEdge(E ver1, E ver2, F element) {
+    public void insertEdge(E ver1, E ver2, F element) throws VertexNotFound {
         VertexNode vertex1 = null, vertex2 = null;
         
         for(VertexNode vertex : this.vertices) {
@@ -65,10 +65,10 @@ public class Graph<E, F> {
             
             if(vertex1 != null && vertex2 != null)
                 break;
-
-        }        
-        System.out.println("vertex1: " + vertex1);
-        System.out.println("vertex2: " + vertex2);
+        }
+        
+        if(vertex1 == null || vertex2 == null)
+            throw new VertexNotFound();
     }
     
     public String toString() {
