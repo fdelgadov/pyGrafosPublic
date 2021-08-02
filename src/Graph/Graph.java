@@ -37,7 +37,7 @@ public class Graph<E, F> {
         }
         
         public String toString() {
-            return "(" + this.vertex.value + this.weight + ")";
+            return "(" + this.vertex.value + ", " + this.weight + ")";
         }
     }
     
@@ -69,6 +69,9 @@ public class Graph<E, F> {
         
         if(vertex1 == null || vertex2 == null)
             throw new VertexNotFound();
+        
+        vertex1.adjacents.insertToBegin(new EdgeNode(vertex2, element));
+        vertex2.adjacents.insertToBegin(new EdgeNode(vertex1, element));
     }
     
     public String toString() {

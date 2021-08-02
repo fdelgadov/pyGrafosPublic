@@ -26,5 +26,6 @@ public class Test {
         catch(Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println(graph);
     }
 }
