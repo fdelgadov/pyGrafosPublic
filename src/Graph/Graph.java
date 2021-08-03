@@ -29,30 +29,33 @@ public class Graph<E, F> {
     
     private class EdgeNode {
         public VertexNode vertex;
+        public int tag;
         public F weight;
         
         public EdgeNode(VertexNode vertex, F weight) {
             this.vertex = vertex;
             this.weight = weight;
+            this.tag = tagCount;
         }
         
-        public EdgeNode(VertexNode vertex) {
-            this(vertex, null);
+        public EdgeNode(int tag) {
+            this.tag = tag;
         }
         
         public String toString() {
-            return "(" + this.vertex.value + ", " + this.weight + ")";
+            return this.tag + ": (" + this.vertex.value + ", " + this.weight + ")";
         }
         
         public boolean equals(Object o) {
             EdgeNode other = (EdgeNode) o;
-            if(other.vertex == this.vertex)
+            if(other.tag == this.tag || other.vertex == this.vertex)
                 return true;
             else
                 return false;
         }
     }
     
+    private int tagCount = 0;
     private LinkedList<VertexNode> vertices = new LinkedList<VertexNode>();
     
     public Graph() {
@@ -84,30 +87,26 @@ public class Graph<E, F> {
         
         vertex1.adjacents.insertToBegin(new EdgeNode(vertex2, element));
         vertex2.adjacents.insertToBegin(new EdgeNode(vertex1, element));
+        this.tagCount++;
     }
     
     public void removeVertex(E v) {
         VertexNode remove = this.vertices.remove(new VertexNode(v));            
         for(VertexNode vertex : this.vertices) {
             try {
-                vertex.adjacents.remove(new EdgeNode(remove));
+                vertex.adjacents.remove(new EdgeNode(remove, null));
             }
-            catch(IllegalStateException e) {
+            catch(Exception e) {
             }
         }
     }
     
-    public void removeEdge(F e) {
+    public void removeEdge(int tag) {
         for(VertexNode vertex : this.vertices) {
-            for(EdgeNode edgeNode : vertex.adjacents) {
-                if(edgeNode.weight.equals(e)) {
-                    try {
-                        vertex.adjacents.remove(edgeNode);
-                        break;
-                    }
-                    catch(IllegalStateException exc) {
-                    }
-                }
+            try {
+                vertex.adjacents.remove(new EdgeNode(tag));
+            }
+            catch(Exception e){
             }
         }
     }

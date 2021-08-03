@@ -3,8 +3,10 @@ package Graph;
 public class Test {
     public static void main(String[] args) throws Exception {
         Graph<Integer, Integer> graph = new Graph<Integer, Integer>();
+        System.out.println("insertVertex(20)");
         graph.insertVertex(20);
         System.out.println(graph);
+        System.out.println("insertVertex(30)");
         graph.insertVertex(30);
         System.out.println(graph);
         try {
@@ -36,7 +38,9 @@ public class Test {
         catch(Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("insertVertex(10)");
         graph.insertVertex(10);
+        System.out.println("insertVertex(40)");
         graph.insertVertex(40);
         System.out.println(graph);
         System.out.println("insertEdge(10,30,5)");
