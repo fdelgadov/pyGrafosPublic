@@ -79,6 +79,27 @@ public class LinkedList<E> implements Iterable<E> {
         return actual.value;
     }
     
+    public E removeFor(int k) throws IllegalStateException {
+        if(k >= this.count) throw new IllegalStateException("Índice no válido...");
+        if(isEmpty()) throw new IllegalStateException("Lista vacía...");
+        
+        Link actual = this.head;
+        if(k == 0) {
+            this.head = this.head.next;
+            this.count--;
+        }
+        else {
+            Link aux = null;
+            for(int i = 0; i < k; i++) {
+                aux = actual;
+                actual = actual.next;
+            }
+            aux.next = actual.next;
+        }
+        
+        return actual.value;
+    }
+    
     public E headValue(){
         return this.head.value;
     }

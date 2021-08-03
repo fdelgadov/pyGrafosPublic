@@ -97,6 +97,21 @@ public class Graph<E, F> {
         }
     }
     
+    public void removeEdge(F e) {
+        for(VertexNode vertex : this.vertices) {
+            for(EdgeNode edgeNode : vertex.adjacents) {
+                if(edgeNode.weight.equals(e)) {
+                    try {
+                        vertex.adjacents.remove(edgeNode);
+                        break;
+                    }
+                    catch(IllegalStateException exc) {
+                    }
+                }
+            }
+        }
+    }
+    
     public String toString() {
         return vertices.toString();
     }
