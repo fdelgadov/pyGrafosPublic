@@ -12,6 +12,14 @@ public class Graph<E, F> {
             this.value = value;
         }
         
+        public boolean isAdjacentTo(VertexNode vertex) {
+            for(EdgeNode edgeNode : this.adjacents) {
+                if(edgeNode.vertex == vertex)
+                    return true;
+            }
+            return false;
+        }
+        
         public String toString() {
             return this.value + "[" + adjacents + "]";
         }
@@ -68,7 +76,7 @@ public class Graph<E, F> {
         vertices.insertToBegin(node);
     }
     
-    public void insertEdge(E ver1, E ver2, F element) throws VertexNotFound {
+    public void insertEdge(E ver1, E ver2, F element) throws VertexNotFound, DuplicatedEdge {
         VertexNode vertex1 = null, vertex2 = null;
         
         for(VertexNode vertex : this.vertices) {
@@ -84,6 +92,9 @@ public class Graph<E, F> {
         
         if(vertex1 == null || vertex2 == null)
             throw new VertexNotFound();
+        
+        if(vertex1.isAdjacentTo(vertex2))
+            throw new DuplicatedEdge();
         
         vertex1.adjacents.insertToBegin(new EdgeNode(vertex2, element));
         vertex2.adjacents.insertToBegin(new EdgeNode(vertex1, element));

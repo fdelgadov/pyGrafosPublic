@@ -46,7 +46,13 @@ public class Test {
         System.out.println("insertEdge(10,30,5)");
         graph.insertEdge(10, 30, 5);
         System.out.println("insertEdge(10,30,3)");
-        graph.insertEdge(10, 30, 3);
+        try {
+            graph.insertEdge(10, 30, 3);
+            System.out.println("insertEdge(10,30,3)");
+        }
+        catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("insertEdge(40,30,3)");
         graph.insertEdge(40, 30, 3);
         System.out.println(graph);
