@@ -113,6 +113,12 @@ public class Graph<E, F> {
     }
     
     public String toString() {
-        return vertices.toString();
+        String res = "";
+        
+        for(VertexNode vertex : this.vertices) {
+            res += vertex + "\n";
+        }
+        
+        return res;
     }
 }
