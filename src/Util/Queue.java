@@ -1,6 +1,6 @@
 package Util;
 
-public class Queue<E extends Comparable<E>> {
+public class Queue<E> {
     private Link first;
     private Link last;
 
@@ -18,15 +18,15 @@ public class Queue<E extends Comparable<E>> {
         first = last = null;
     }
     
-    public E ObtenerValorFinal(){
+    public E getFinalValue(){
         return last.value;
     }
     
-    public E ObtenerValorInicial(){
+    public E getInitialValue(){
         return first.value;
     }
     
-    public void Encolar(E element){
+    public void enqueue(E element){
         Link temporal = new Link(element, null);
         if (last == null){
             first = last = temporal;
@@ -36,7 +36,7 @@ public class Queue<E extends Comparable<E>> {
             last = temporal;
         }
     }
-    
+    /*
     public void encolarPrioridad(E element) {
     	Link newh = new Link(element, null);
     	if(this.last == null)
@@ -64,8 +64,9 @@ public class Queue<E extends Comparable<E>> {
     		}
     	}
     }
+    */
     
-    public void desencolar(){
+    public void dequeue(){
         if (first != null) {            
             first = first.next;
             if (first == null){
@@ -73,7 +74,7 @@ public class Queue<E extends Comparable<E>> {
             }            
         }
     }
-    public boolean estaVacio(){
+    public boolean isEmpty(){
         return this.last == null;
     }
     
@@ -90,26 +91,26 @@ public class Queue<E extends Comparable<E>> {
 
     public static void main(String[] args) {
         Queue <Integer> notas = new Queue<Integer>();
-        notas.Encolar(10);
-        notas.Encolar(20);
-        notas.Encolar(25);
+        notas.enqueue(10);
+        notas.enqueue(20);
+        notas.enqueue(25);
         
-        System.out.println(notas.ObtenerValorInicial());//10
-        System.out.println(notas.ObtenerValorFinal());//25
+        System.out.println(notas.getInitialValue());//10
+        System.out.println(notas.getFinalValue());//25
         
-        notas.desencolar();
-        notas.desencolar();
-        System.out.println(notas.estaVacio());//false
+        notas.dequeue();
+        notas.dequeue();
+        System.out.println(notas.isEmpty());//false
         
-        System.out.println(notas.ObtenerValorFinal());//25
-        System.out.println(notas.ObtenerValorInicial());//25
+        System.out.println(notas.getFinalValue());//25
+        System.out.println(notas.getInitialValue());//25
         
-        notas.Encolar(30);
-        notas.Encolar(40);
-        notas.Encolar(50);
-        notas.desencolar();        
-        System.out.println(notas.ObtenerValorInicial());
-        System.out.println(notas.ObtenerValorFinal());
+        notas.enqueue(30);
+        notas.enqueue(40);
+        notas.enqueue(50);
+        notas.dequeue();        
+        System.out.println(notas.getInitialValue());
+        System.out.println(notas.getFinalValue());
         
     }
 }

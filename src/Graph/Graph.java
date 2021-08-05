@@ -194,7 +194,7 @@ public class Graph<E, F> {
     }
 
     public void bfs(VertexNode v){
-        
+        Queue<VertexNode> list = new Queue<VertexNode>();
     }
 
     private VertexNode opposite(VertexNode v, EdgeNode e){
