@@ -171,7 +171,7 @@ public class Graph<E, F> {
     }
 
     public void dfs(VertexNode v){
-        v.label = DISCOVERY;
+        v.label = VISITED;
         for(EdgeNode edgeNode : v.adjacents){
             if(edgeNode.edge.label == UNEXPLORED){
                 VertexNode w = this.opposite(v, edgeNode);
