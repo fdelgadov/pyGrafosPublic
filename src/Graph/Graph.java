@@ -1,7 +1,7 @@
 package Graph;
 
 import Exceptions.*;
-import LinkedList.*;
+import Util.*;
 
 public class Graph<E, F> {
     public int tagCount = 0;
@@ -182,6 +182,19 @@ public class Graph<E, F> {
                 else edgeNode.edge.label = BACK;
             }
         }
+    }
+    
+    public void bfs() {
+        for(VertexNode vertex : this.vertices){
+            vertex.label = UNEXPLORED;
+            for(EdgeNode edgeNode : vertex.adjacents) edgeNode.edge.label = UNEXPLORED;
+        }
+
+        for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED) bfs(vertex);
+    }
+
+    public void bfs(VertexNode v){
+        
     }
 
     private VertexNode opposite(VertexNode v, EdgeNode e){
