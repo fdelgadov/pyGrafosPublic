@@ -1,14 +1,13 @@
 package Graph;
 
-import Exceptions.DuplicateItemException;
-
 public class Test {
     public static void main(String[] args) throws Exception {
+        graphTest();
         dijkstra();
     }
 
     public static void graphTest() throws Exception{
-        Graph<Integer, Integer> graph = new Graph<Integer, Integer>();
+        Graph<Integer> graph = new Graph<Integer>();
         System.out.println("insertVertex(20)");
         graph.insertVertex(20);
         System.out.println(graph);
@@ -85,7 +84,7 @@ public class Test {
     }
 
     public static void dijkstra() throws Exception{
-        Graph<String, Integer> graph = new Graph<String, Integer>();
+        Graph<String> graph = new Graph<String>();
         graph.insertVertex("s");
         graph.insertVertex("u");
         graph.insertVertex("x");

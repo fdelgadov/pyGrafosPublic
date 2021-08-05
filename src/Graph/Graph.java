@@ -3,7 +3,7 @@ package Graph;
 import Exceptions.*;
 import Util.*;
 
-public class Graph<E, F> {
+public class Graph<E> {
     public int tagCount = 0;
     public LinkedList<VertexNode> vertices = new LinkedList<VertexNode>();
     
@@ -81,10 +81,10 @@ public class Graph<E, F> {
 
     private class Edge {
         public int tag;
-        public F weight;
+        public int weight;
         public int label; //para dfs -> 0:unexplored, 1:discovery, 2:back
 
-        public Edge(F weight){
+        public Edge(int weight){
             this.weight = weight;
             this.tag = tagCount;
             tagCount++;
@@ -102,7 +102,7 @@ public class Graph<E, F> {
         vertices.insertToBegin(node);
     }
     
-    public void insertEdge(E ver1, E ver2, F element) throws VertexNotFound, DuplicatedEdge {
+    public void insertEdge(E ver1, E ver2, int element) throws VertexNotFound, DuplicatedEdge {
         Object[] nodePair = getNodePair(ver1, ver2);
         VertexNode vertex1 = (VertexNode) nodePair[0], vertex2 = (VertexNode) nodePair[1];
         
