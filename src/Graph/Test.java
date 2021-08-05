@@ -1,7 +1,13 @@
 package Graph;
 
+import Exceptions.DuplicateItemException;
+
 public class Test {
     public static void main(String[] args) throws Exception {
+        dijkstra();
+    }
+
+    public static void graphTest() throws Exception{
         Graph<Integer, Integer> graph = new Graph<Integer, Integer>();
         System.out.println("insertVertex(20)");
         graph.insertVertex(20);
@@ -76,5 +82,28 @@ public class Test {
         System.out.println("bfs()");
         graph.bfs();
         graph.printVertexEdgeLabel();
+    }
+
+    public static void dijkstra() throws Exception{
+        Graph<String, Integer> graph = new Graph<String, Integer>();
+        graph.insertVertex("s");
+        graph.insertVertex("u");
+        graph.insertVertex("x");
+        graph.insertVertex("v");
+        graph.insertVertex("y");
+        graph.insertEdge("s", "u", 10);
+        graph.insertEdge("s", "x", 5);
+        graph.insertEdge("s", "y", 7);
+        graph.insertEdge("u", "x", 2);
+        graph.insertEdge("u", "v", 1);
+        graph.insertEdge("x", "v", 9);
+        graph.insertEdge("x", "y", 2);
+        graph.insertEdge("v", "y", 4);
+        System.out.println(graph);
+        System.out.println("dijkstra()");
+        Object[][] res = graph.dijkstra("s");
+        for(Object[] obj : res){
+            System.out.println(obj[0] + ":" + obj[1]);
+        }
     }
 }

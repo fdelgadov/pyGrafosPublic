@@ -12,6 +12,7 @@ public class Graph<E, F> {
     public static final int BACK = 2;
     public static final int VISITED = 3;
     public static final int CROSS = 4;
+    public static final int INFINITE = 999999999;
 
     private class VertexNode {
         public E value;
@@ -164,7 +165,7 @@ public class Graph<E, F> {
 
     public void dfs() {
         initLabels();
-        
+
         for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED) dfs(vertex);
     }
 
@@ -237,10 +238,20 @@ public class Graph<E, F> {
         System.out.println("\n" + edgeLabel);
     }
 
-    public int[] dijkstra(E v){
+    public Object[][] dijkstra(E v){
+        Object[][] d = new Object[this.vertices.length()][3];
+        int i = 1;
         for(VertexNode vertex : this.vertices)
-            if(vertex.value.equals(v));
-        return null;
+            if(vertex.value.equals(v)){
+                d[0][0] = vertex;
+                d[0][1] = 0;
+            }
+            else{
+                d[i][0] = vertex;
+                d[i][1] = INFINITE;
+                i++;
+            }
+        return d;
     }
     
     public String toString() {
