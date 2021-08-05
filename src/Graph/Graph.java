@@ -17,6 +17,12 @@ public class Graph<E, F> {
                 if(edgeNode.vertex == vertex)
                     return true;
             }
+
+            for(EdgeNode edgeNode : vertex.adjacents) {
+                if(edgeNode.vertex == this)
+                    return true;
+            }
+
             return false;
         }
         
@@ -77,24 +83,8 @@ public class Graph<E, F> {
     }
     
     public void insertEdge(E ver1, E ver2, F element) throws VertexNotFound, DuplicatedEdge {
-        VertexNode vertex1 = null, vertex2 = null;
-        
-        for(VertexNode vertex : this.vertices) {
-            if(vertex.value.equals(ver1))
-                vertex1 = vertex;
-            
-            if(vertex.value.equals(ver2))
-                vertex2 = vertex;
-            
-            if(vertex1 != null && vertex2 != null)
-                break;
-        }
-        
-        if(vertex1 == null || vertex2 == null)
-            throw new VertexNotFound();
-        
-        if(vertex1.isAdjacentTo(vertex2))
-            throw new DuplicatedEdge();
+        Object[] nodePair = getNodePair(ver1, ver2);
+        VertexNode vertex1 = (VertexNode) nodePair[0], vertex2 = (VertexNode) nodePair[1];
         
         vertex1.adjacents.insertToBegin(new EdgeNode(vertex2, element));
         vertex2.adjacents.insertToBegin(new EdgeNode(vertex1, element));
@@ -120,6 +110,35 @@ public class Graph<E, F> {
             catch(Exception e){
             }
         }
+    }
+
+    public boolean areAdjacent(E v, E w) throws VertexNotFound {
+        Object[] nodePair = getNodePair(v, w);
+        VertexNode vertex1 = (VertexNode) nodePair[0], vertex2 = (VertexNode) nodePair[1];
+        return  vertex1.isAdjacentTo(vertex2);
+    }
+
+    private Object[] getNodePair(E v, E w) throws VertexNotFound {
+        VertexNode vertex1 = null, vertex2 = null;
+
+        for(VertexNode vertex : this.vertices) {
+            if(vertex.value.equals(v))
+                vertex1 = vertex;
+            
+            if(vertex.value.equals(w))
+                vertex2 = vertex;
+            
+            if(vertex1 != null && vertex2 != null)
+                break;
+        }
+        
+        if(vertex1 == null || vertex2 == null)
+            throw new VertexNotFound();
+
+        Object[] ret = new Object[2];
+        ret[0] = vertex1;
+        ret[1] = vertex2;
+        return ret;
     }
     
     public String toString() {

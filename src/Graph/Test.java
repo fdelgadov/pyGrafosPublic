@@ -9,6 +9,7 @@ public class Test {
         System.out.println("insertVertex(30)");
         graph.insertVertex(30);
         System.out.println(graph);
+        System.out.println("insertVertex(20)");
         try {
             graph.insertVertex(20);
             System.out.println(graph);
@@ -19,8 +20,8 @@ public class Test {
         
         System.out.println("insertEdge(20,30,5)");
         graph.insertEdge(20, 30, 5);
+        System.out.println("insertEdge(20,10,2)");
         try {
-            System.out.println("insertEdge(20,10,5)");
             graph.insertEdge(20, 10, 2);
         }
         catch(Exception e) {
@@ -30,8 +31,8 @@ public class Test {
         System.out.println("removeVertex(20)");
         graph.removeVertex(20);
         System.out.println(graph);
+        System.out.println("removeVertex(10)");
         try {
-            System.out.println("removeVertex(10)");
             graph.removeVertex(10);
             System.out.println(graph);
         }
@@ -48,7 +49,6 @@ public class Test {
         System.out.println("insertEdge(10,30,3)");
         try {
             graph.insertEdge(10, 30, 3);
-            System.out.println("insertEdge(10,30,3)");
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
