@@ -1,6 +1,8 @@
 package Util;
 
-public class Queue<E> {
+import java.util.Iterator;
+
+public class Queue<E> implements Iterable<E> {
     private Link first;
     private Link last;
 
@@ -11,6 +13,26 @@ public class Queue<E> {
         public Link(E val, Link next){
             this.value = val;
             this.next = next;
+        }
+    }
+
+    private class QueueIterator implements Iterator<E>{
+        Link actual;
+        
+        public QueueIterator() {
+            actual = first;
+        }
+        
+        public boolean hasNext() {
+            if(actual == null)
+                return false;
+            return true;
+        }
+
+        public E next() {
+            E aux = this.actual.value;
+            this.actual = actual.next;
+            return aux;
         }
     }
     
@@ -87,6 +109,10 @@ public class Queue<E> {
     	}
     	
     	return str;
+    }
+
+    public Iterator<E> iterator() {
+        return new QueueIterator();
     }
 
     public static void main(String[] args) {
