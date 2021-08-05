@@ -163,11 +163,8 @@ public class Graph<E, F> {
     }
 
     public void dfs() {
-        for(VertexNode vertex : this.vertices){
-            vertex.label = UNEXPLORED;
-            for(EdgeNode edgeNode : vertex.adjacents) edgeNode.edge.label = UNEXPLORED;
-        }
-
+        initLabels();
+        
         for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED) dfs(vertex);
     }
 
@@ -186,10 +183,7 @@ public class Graph<E, F> {
     }
     
     public void bfs() {
-        for(VertexNode vertex : this.vertices){
-            vertex.label = UNEXPLORED;
-            for(EdgeNode edgeNode : vertex.adjacents) edgeNode.edge.label = UNEXPLORED;
-        }
+        initLabels();
 
         for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED) bfs(vertex);
     }
@@ -222,6 +216,13 @@ public class Graph<E, F> {
     private VertexNode opposite(VertexNode v, EdgeNode e){
         for(EdgeNode edge : v.adjacents) if(edge == e) return edge.vertex;
         return null;
+    }
+
+    private void initLabels(){
+        for(VertexNode vertex : this.vertices){
+            vertex.label = UNEXPLORED;
+            for(EdgeNode edgeNode : vertex.adjacents) edgeNode.edge.label = UNEXPLORED;
+        }
     }
 
     public void printVertexEdgeLabel(){
