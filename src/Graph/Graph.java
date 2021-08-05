@@ -4,9 +4,18 @@ import Exceptions.*;
 import LinkedList.*;
 
 public class Graph<E, F> {
+    public int tagCount = 0;
+    public LinkedList<VertexNode> vertices = new LinkedList<VertexNode>();
+    
+    public static final int UNEXPLORED = 0;
+    public static final int DISCOVERY = 1;
+    public static final int BACK = 2;
+    public static final int VISITED = 3;
+
     private class VertexNode {
         public E value;
         public LinkedList<EdgeNode> adjacents = new LinkedList<EdgeNode>();
+        public int label; //para dfs -> 0:unexplored, 1:discovery, 2:back
         
         public VertexNode(E value) {
             this.value = value;
@@ -43,38 +52,47 @@ public class Graph<E, F> {
     
     private class EdgeNode {
         public VertexNode vertex;
-        public int tag;
-        public F weight;
+        public Edge edge;
         
-        public EdgeNode(VertexNode vertex, F weight) {
+        public EdgeNode(VertexNode vertex, Edge edge) {
             this.vertex = vertex;
-            this.weight = weight;
-            this.tag = tagCount;
+            this.edge = edge;
         }
-        
+
         public EdgeNode(int tag) {
-            this.tag = tag;
+            this.edge = new Edge();
+            this.edge.tag = tag;
         }
-        
+                
         public String toString() {
-            return this.tag + ": (" + this.vertex.value + ", " + this.weight + ")";
+            return edge.tag + ": (" + this.vertex.value + ", " + edge.weight + ")";
         }
         
         public boolean equals(Object o) {
             EdgeNode other = (EdgeNode) o;
-            if(other.tag == this.tag || other.vertex == this.vertex)
+            if(other.edge.tag == this.edge.tag || other.vertex == this.vertex)
                 return true;
             else
                 return false;
         }
     }
-    
-    private int tagCount = 0;
-    private LinkedList<VertexNode> vertices = new LinkedList<VertexNode>();
-    
-    public Graph() {
+
+    private class Edge {
+        public int tag;
+        public F weight;
+        public int label; //para dfs -> 0:unexplored, 1:discovery, 2:back
+
+        public Edge(F weight){
+            this.weight = weight;
+            this.tag = tagCount;
+            tagCount++;
+        }
+        
+        public Edge() {
+            
+        }
     }
-    
+
     public void insertVertex(E element) throws DuplicateItemException {
         VertexNode node = new VertexNode(element);
         if(vertices.contains(node))
@@ -86,26 +104,28 @@ public class Graph<E, F> {
         Object[] nodePair = getNodePair(ver1, ver2);
         VertexNode vertex1 = (VertexNode) nodePair[0], vertex2 = (VertexNode) nodePair[1];
         
-        vertex1.adjacents.insertToBegin(new EdgeNode(vertex2, element));
-        vertex2.adjacents.insertToBegin(new EdgeNode(vertex1, element));
-        this.tagCount++;
+        Edge edge = new Edge(element);
+        vertex1.adjacents.insertToBegin(new EdgeNode(vertex2, edge));
+        vertex2.adjacents.insertToBegin(new EdgeNode(vertex1, edge));
     }
     
     public void removeVertex(E v) {
         VertexNode remove = this.vertices.remove(new VertexNode(v));            
         for(VertexNode vertex : this.vertices) {
             try {
-                vertex.adjacents.remove(new EdgeNode(remove, null));
+                vertex.adjacents.remove(new EdgeNode(remove, new Edge()));
             }
             catch(Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
     
     public void removeEdge(int tag) {
         for(VertexNode vertex : this.vertices) {
+            EdgeNode remove = new EdgeNode(tag);
             try {
-                vertex.adjacents.remove(new EdgeNode(tag));
+                vertex.adjacents.remove(remove);
             }
             catch(Exception e){
             }
@@ -139,6 +159,46 @@ public class Graph<E, F> {
         ret[0] = vertex1;
         ret[1] = vertex2;
         return ret;
+    }
+
+    public void dfs() {
+        for(VertexNode vertex : this.vertices){
+            vertex.label = UNEXPLORED;
+            for(EdgeNode edgeNode : vertex.adjacents) edgeNode.edge.label = UNEXPLORED;
+        }
+
+        for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED) dfs(vertex);
+    }
+
+    public void dfs(VertexNode v){
+        v.label = DISCOVERY;
+        for(EdgeNode edgeNode : v.adjacents){
+            if(edgeNode.edge.label == UNEXPLORED){
+                VertexNode w = this.opposite(v, edgeNode);
+                if(w.label == UNEXPLORED){
+                    edgeNode.edge.label = DISCOVERY;
+                    dfs(w);
+                }
+                else edgeNode.edge.label = BACK;
+            }
+        }
+    }
+
+    private VertexNode opposite(VertexNode v, EdgeNode e){
+        for(EdgeNode edge : v.adjacents) if(edge == e) return edge.vertex;
+        return null;
+    }
+
+    public void printVertexEdgeLabel(){
+        String edgeLabel = "";
+        System.out.println("VertexLabel");
+        for(VertexNode vertex : this.vertices){
+            System.out.print(vertex.value + ":" + vertex.label + " ");
+            for(EdgeNode edgeNode : vertex.adjacents)
+                edgeLabel += edgeNode.edge.tag + ":" + edgeNode.edge.label + " ";
+            edgeLabel += "\n";
+        }
+        System.out.println("\n" + edgeLabel);
     }
     
     public String toString() {

@@ -59,5 +59,19 @@ public class Test {
         System.out.println("removeEdge(3)");
         graph.removeEdge(3);
         System.out.println(graph);
+        System.out.println("insertEdge(40,30,3)");
+        graph.insertEdge(40, 30, 3);
+        System.out.println("removeEdge(1)");
+        graph.removeEdge(1);
+        System.out.println("insertVertex(50)");
+        graph.insertVertex(50);
+        System.out.println("insertEdge(50,30,0)");
+        graph.insertEdge(50, 30, 0);
+        System.out.println("insertEdge(50,40,0)");
+        graph.insertEdge(50, 40, 7);
+        System.out.println(graph);
+        System.out.println("dfs()");
+        graph.dfs();
+        graph.printVertexEdgeLabel();
     }
 }
