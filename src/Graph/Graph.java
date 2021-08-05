@@ -239,18 +239,52 @@ public class Graph<E> {
     }
 
     public Object[][] dijkstra(E v){
-        Object[][] d = new Object[this.vertices.length()][3];
+        class DijkstraNode implements Comparable<DijkstraNode> {
+            VertexNode vertex;
+            VertexNode path;
+            int weight;
+
+            public int compareTo(DijkstraNode o) {
+                DijkstraNode other = (DijkstraNode) o;
+                if(this.weight > other.weight)
+                    return 1;
+                if(this.weight < other.weight)
+                    return -1;
+                return 0;
+            }
+        }
+
+        Object[] nodes = new Object[this.vertices.length()];
         int i = 1;
-        for(VertexNode vertex : this.vertices)
+        for(VertexNode vertex : this.vertices){
+            DijkstraNode node = new DijkstraNode();
+            node.vertex = vertex;
             if(vertex.value.equals(v)){
-                d[0][0] = vertex;
-                d[0][1] = 0;
+                node.weight = 0;
+                nodes[0] = node;
             }
             else{
-                d[i][0] = vertex;
-                d[i][1] = INFINITE;
+                node.weight = INFINITE;
+                nodes[i] = node;
                 i++;
             }
+        }
+
+        PriorityQueue<DijkstraNode> queue = new PriorityQueue<DijkstraNode>();
+        for(Object node : nodes){
+            queue.enqueue((DijkstraNode) node);
+        }
+
+        Object[][] d = new Object[this.vertices.length()][3];
+        i = 0;
+        for(Object node : nodes){
+            DijkstraNode dijkstraNode = (DijkstraNode) node;
+            d[i][0] = dijkstraNode.vertex;
+            d[i][1] = dijkstraNode.weight;
+            d[i][2] = dijkstraNode.path;
+            i++;
+        }
+
         return d;
     }
     

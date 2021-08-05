@@ -2,7 +2,7 @@ package Graph;
 
 public class Test {
     public static void main(String[] args) throws Exception {
-        graphTest();
+        //graphTest();
         dijkstra();
     }
 
@@ -99,10 +99,11 @@ public class Test {
         graph.insertEdge("x", "y", 2);
         graph.insertEdge("v", "y", 4);
         System.out.println(graph);
-        System.out.println("dijkstra()");
+        System.out.println("dijkstra(s)");
         Object[][] res = graph.dijkstra("s");
         for(Object[] obj : res){
             System.out.println(obj[0] + ":" + obj[1]);
         }
+
     }
 }

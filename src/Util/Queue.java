@@ -3,10 +3,10 @@ package Util;
 import java.util.Iterator;
 
 public class Queue<E> implements Iterable<E> {
-    private Link first;
-    private Link last;
+    protected Link first;
+    protected Link last;
 
-    private class Link{
+    protected class Link{
         public E value;     
         public Link next;
         
