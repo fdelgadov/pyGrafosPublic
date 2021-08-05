@@ -211,7 +211,7 @@ public class Graph<E, F> {
                             w.label = VISITED;
                             aux.enqueue(w);
                         }
-                        else w.label = CROSS;
+                        else edgeNode.edge.label = CROSS;
                     }
                 }
             }
@@ -234,6 +234,12 @@ public class Graph<E, F> {
             edgeLabel += "\n";
         }
         System.out.println("\n" + edgeLabel);
+    }
+
+    public int[] dijkstra(E v){
+        for(VertexNode vertex : this.vertices)
+            if(vertex.value.equals(v));
+        return null;
     }
     
     public String toString() {
