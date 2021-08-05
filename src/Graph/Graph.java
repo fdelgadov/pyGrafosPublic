@@ -11,6 +11,7 @@ public class Graph<E, F> {
     public static final int DISCOVERY = 1;
     public static final int BACK = 2;
     public static final int VISITED = 3;
+    public static final int CROSS = 4;
 
     private class VertexNode {
         public E value;
@@ -195,6 +196,27 @@ public class Graph<E, F> {
 
     public void bfs(VertexNode v){
         Queue<VertexNode> list = new Queue<VertexNode>();
+        list.enqueue(v);
+        v.label = VISITED;
+
+        Queue<VertexNode> listI = list;
+        while(!listI.isEmpty()){
+            Queue<VertexNode> aux = new Queue<VertexNode>();
+            for(VertexNode vertex : listI){
+                for(EdgeNode edgeNode : vertex.adjacents){
+                    if(edgeNode.edge.label == UNEXPLORED){
+                        VertexNode w = opposite(vertex, edgeNode);
+                        if(w.label == UNEXPLORED){
+                            edgeNode.edge.label = DISCOVERY;
+                            w.label = VISITED;
+                            aux.enqueue(w);
+                        }
+                        else w.label = CROSS;
+                    }
+                }
+            }
+            listI = aux;
+        }
     }
 
     private VertexNode opposite(VertexNode v, EdgeNode e){

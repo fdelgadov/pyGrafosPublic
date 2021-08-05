@@ -73,5 +73,8 @@ public class Test {
         System.out.println("dfs()");
         graph.dfs();
         graph.printVertexEdgeLabel();
+        System.out.println("bfs()");
+        graph.bfs();
+        graph.printVertexEdgeLabel();
     }
 }
