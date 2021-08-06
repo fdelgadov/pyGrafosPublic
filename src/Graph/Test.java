@@ -102,7 +102,7 @@ public class Test {
         System.out.println("dijkstra(s)");
         Object[][] res = graph.dijkstra("s");
         for(Object[] obj : res){
-            System.out.println(obj[0] + ":" + obj[1]);
+            System.out.println(obj[0] + " | " + obj[1] + " | " + obj[2]);
         }
 
     }

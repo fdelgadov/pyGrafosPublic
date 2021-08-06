@@ -36,6 +36,13 @@ public class Graph<E> {
 
             return false;
         }
+
+        public Edge edgeWith(VertexNode vertex){
+            for(EdgeNode edgeNode : this.adjacents){
+                if(edgeNode.vertex == vertex) return edgeNode.edge;
+            }
+            return null;
+        }
         
         public String toString() {
             return this.value + "[" + adjacents + "]";
@@ -261,6 +268,7 @@ public class Graph<E> {
             node.vertex = vertex;
             if(vertex.value.equals(v)){
                 node.weight = 0;
+                node.path = vertex;
                 nodes[0] = node;
             }
             else{
@@ -273,6 +281,21 @@ public class Graph<E> {
         PriorityQueue<DijkstraNode> queue = new PriorityQueue<DijkstraNode>();
         for(Object node : nodes){
             queue.enqueue((DijkstraNode) node);
+        }
+        while(!queue.isEmpty()){
+            DijkstraNode u = queue.getInitialValue();
+            queue.dequeue();
+            for(DijkstraNode z : queue){
+                Edge edge = u.vertex.edgeWith(z.vertex);
+                if(edge != null){
+                    int weight = u.weight + edge.weight;
+                    if(z.weight > weight){
+                        z.weight = weight;
+                        z.path = u.vertex;
+                        queue.enqueue(z);
+                    }
+                }
+            }    
         }
 
         Object[][] d = new Object[this.vertices.length()][3];
