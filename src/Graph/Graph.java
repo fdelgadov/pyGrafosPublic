@@ -257,7 +257,8 @@ public class Graph<E> {
 
         LinkedList<PathTreeNode> paths = new LinkedList<PathTreeNode>();
         for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED){
-            PathTreeNode pathTree =  bfs(vertex);
+            PathTreeNode pathTree = new PathTreeNode();
+            bfs(vertex, pathTree);
             paths.insertToBegin(pathTree);
         }
 
@@ -266,8 +267,7 @@ public class Graph<E> {
         }
     }
 
-    public PathTreeNode bfs(VertexNode v){
-        PathTreeNode pathTree = new PathTreeNode();
+    public void bfs(VertexNode v, PathTreeNode pathTree){
         Queue<VertexNode> list = new Queue<VertexNode>();
         Queue<PathTreeNode> nodeQueue = new Queue<PathTreeNode>();
 
@@ -301,8 +301,6 @@ public class Graph<E> {
             }
             listI = aux;
         }
-
-        return pathTree;
     }
 
     private VertexNode opposite(VertexNode v, EdgeNode e){
