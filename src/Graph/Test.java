@@ -175,7 +175,11 @@ public class Test {
         graph02.removeVertex("apples");
         System.out.println("isIncluded(g1,g2): " + Graph.isIncluded(graph, graph02));
         System.out.println("insertEdge(grape,drips,0)");
-        graph02.insertEdge("grape", "drips", 0);
+        graph02.insertEdge("grape", "drips", 0);    //tag = 3
+        System.out.println("isIncluded(g1,g2): " + Graph.isIncluded(graph, graph02));
+        System.out.println("removeEdge(3)");
+        graph02.removeEdge(3);
+        System.out.println(graph02);
         System.out.println("isIncluded(g1,g2): " + Graph.isIncluded(graph, graph02));
     }
 }

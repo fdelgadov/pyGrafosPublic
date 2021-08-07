@@ -1,7 +1,5 @@
 package Graph;
 
-import javax.sound.sampled.Line;
-
 import Exceptions.*;
 import Util.*;
 
@@ -100,7 +98,7 @@ public class Graph<E> {
         }
         
         public Edge() {
-            
+            this.tag = -1;
         }
     }
 
@@ -357,11 +355,30 @@ public class Graph<E> {
             g2 = aux;
         }
 
-        int count = 0;
         for(VertexNode vertexNode : g2.vertices){
-            if(g1.vertices.contains(vertexNode)) count++;
+            boolean contained = false;
+            VertexNode g1Vertex = null;
+            for(VertexNode vertex : g1.vertices){
+                if(vertexNode.equals(vertex)){
+                    g1Vertex = vertex;
+                    contained = true;
+                    break;
+                }
+            }
+            if(!contained) return false;
+
+            for(EdgeNode edgeNode : vertexNode.adjacents){
+                contained = false;
+                for(EdgeNode g1Edge : g1Vertex.adjacents){
+                    if(edgeNode.vertex.equals(g1Edge.vertex) && edgeNode.edge.weight == g1Edge.edge.weight){
+                        contained = true;
+                        break;
+                    }
+                }
+                if(!contained) return false;
+            }
         }
-        if(count != g2.vertices.length()) return false;
+
         return true;
     }
     
