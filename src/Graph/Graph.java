@@ -4,8 +4,8 @@ import Exceptions.*;
 import Util.*;
 
 public class Graph<E> {
-    public int tagCount = 0;
-    public LinkedList<VertexNode> vertices = new LinkedList<VertexNode>();
+    private int tagCount = 0;
+    private LinkedList<VertexNode> vertices = new LinkedList<VertexNode>();
     
     public static final int UNEXPLORED = 0;
     public static final int DISCOVERY = 1;
@@ -100,6 +100,17 @@ public class Graph<E> {
         public Edge() {
             
         }
+    }
+
+    public Object[] vertices(){
+        Object[] res = new Object[this.vertices.length()];
+        int count = 0;
+        for(VertexNode vertexNode : this.vertices){
+            res[count] = vertexNode.value;
+            count++;
+        }
+
+        return res;
     }
 
     public void insertVertex(E element) throws DuplicateItemException {

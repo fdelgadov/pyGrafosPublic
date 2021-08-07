@@ -3,7 +3,8 @@ package Graph;
 public class Test {
     public static void main(String[] args) throws Exception {
         //graphTest();
-        dijkstra();
+        //dijkstra();
+        ejercicio4();
     }
 
     public static void graphTest() throws Exception{
@@ -105,5 +106,34 @@ public class Test {
             System.out.println(obj[0] + " | " + obj[1] + " | " + obj[2]);
         }
 
+    }
+
+    public static void ejercicio4() throws Exception{
+        Graph<String> graph = new Graph<String>();
+        String[] words = {"words", "cords", "corps", "coops", "crops", "drops", "drips", "grips", "gripe", "grape", "graph"};
+
+        for(String word : words){
+            graph.insertVertex(word);
+        }
+
+        Object[] vertices = graph.vertices();
+        for(Object vertex1 : vertices){
+            for(Object vertex2 : vertices){
+                String v1 = (String) vertex1, v2 = (String) vertex2;
+                if(differentChars(v1, v2) == 1 && !graph.areAdjacent(v1, v2)){
+                    graph.insertEdge(v1, v2, 0);
+                }   
+            }
+        }
+
+        System.out.println(graph);
+    }
+
+    private static int differentChars(String a, String b){
+        int count = 0;
+        for(int i = 0; i < a.length(); i++){
+            if(a.charAt(i) != b.charAt(i)) count++;
+        }
+        return count;
     }
 }
