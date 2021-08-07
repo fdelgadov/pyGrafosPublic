@@ -210,5 +210,7 @@ public class Test {
         graph.dfs();
         System.out.println("bfs()");
         graph.bfs();
+        System.out.println("printVertexEdgeLabel()");
+        graph.printVertexEdgeLabel();
     }
 }

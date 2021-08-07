@@ -257,8 +257,7 @@ public class Graph<E> {
 
         LinkedList<PathTreeNode> paths = new LinkedList<PathTreeNode>();
         for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED){
-            PathTreeNode pathTree = new PathTreeNode();
-            bfs(vertex, pathTree);
+            PathTreeNode pathTree =  bfs(vertex);
             paths.insertToBegin(pathTree);
         }
 
@@ -267,8 +266,12 @@ public class Graph<E> {
         }
     }
 
-    public void bfs(VertexNode v, PathTreeNode pathTree){
+    public PathTreeNode bfs(VertexNode v){
+        PathTreeNode pathTree = new PathTreeNode();
         Queue<VertexNode> list = new Queue<VertexNode>();
+        Queue<PathTreeNode> nodeQueue = new Queue<PathTreeNode>();
+
+        nodeQueue.enqueue(pathTree);
         list.enqueue(v);
         v.label = VISITED;
         pathTree.value = v.value;
@@ -276,10 +279,11 @@ public class Graph<E> {
         Queue<VertexNode> listI = list;
         while(!listI.isEmpty()){
             Queue<VertexNode> aux = new Queue<VertexNode>();
+
             for(VertexNode vertex : listI){
-                for(PathTreeNode node : pathTree.children){
-                    if(node.value.equals(vertex.value)) pathTree = node;
-                }    
+                PathTreeNode node = nodeQueue.getInitialValue();
+                nodeQueue.dequeue();
+
                 for(EdgeNode edgeNode : vertex.adjacents){
                     if(edgeNode.edge.label == UNEXPLORED){
                         VertexNode w = opposite(vertex, edgeNode);
@@ -287,17 +291,18 @@ public class Graph<E> {
                             edgeNode.edge.label = DISCOVERY;
                             w.label = VISITED;
                             aux.enqueue(w);
+                            PathTreeNode son = new PathTreeNode(w.value);
+                            node.children.insertToBegin(son);
+                            nodeQueue.enqueue(son);
                         }
                         else edgeNode.edge.label = CROSS;
                     }
                 }
             }
             listI = aux;
-
-            for(VertexNode vertex : aux){
-                pathTree.children.insertToBegin(new PathTreeNode(vertex.value));
-            }
         }
+
+        return pathTree;
     }
 
     private VertexNode opposite(VertexNode v, EdgeNode e){
