@@ -92,6 +92,10 @@ public class Graph<E> {
 
         public PathTreeNode(){}
 
+        public PathTreeNode(E value){
+            this.value = value;
+        }
+
         public String toString(){
             return displayNode("");
         }
@@ -251,18 +255,31 @@ public class Graph<E> {
     public void bfs() {
         initLabels();
 
-        for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED) bfs(vertex);
+        LinkedList<PathTreeNode> paths = new LinkedList<PathTreeNode>();
+        for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED){
+            PathTreeNode pathTree = new PathTreeNode();
+            bfs(vertex, pathTree);
+            paths.insertToBegin(pathTree);
+        }
+
+        for(PathTreeNode pathTree : paths){
+            System.out.println(pathTree);
+        }
     }
 
-    public void bfs(VertexNode v){
+    public void bfs(VertexNode v, PathTreeNode pathTree){
         Queue<VertexNode> list = new Queue<VertexNode>();
         list.enqueue(v);
         v.label = VISITED;
+        pathTree.value = v.value;
 
         Queue<VertexNode> listI = list;
         while(!listI.isEmpty()){
             Queue<VertexNode> aux = new Queue<VertexNode>();
             for(VertexNode vertex : listI){
+                for(PathTreeNode node : pathTree.children){
+                    if(node.value.equals(vertex.value)) pathTree = node;
+                }    
                 for(EdgeNode edgeNode : vertex.adjacents){
                     if(edgeNode.edge.label == UNEXPLORED){
                         VertexNode w = opposite(vertex, edgeNode);
@@ -276,6 +293,10 @@ public class Graph<E> {
                 }
             }
             listI = aux;
+
+            for(VertexNode vertex : aux){
+                pathTree.children.insertToBegin(new PathTreeNode(vertex.value));
+            }
         }
     }
 

@@ -206,7 +206,9 @@ public class Test {
         graph.insertEdge("F", "G", 0);
         graph.insertEdge("H", "I", 0);
         System.out.println(graph);
+        System.out.println("dfs()");
         graph.dfs();
+        System.out.println("bfs()");
         graph.bfs();
     }
 }
