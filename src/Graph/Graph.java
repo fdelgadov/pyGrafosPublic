@@ -1,5 +1,7 @@
 package Graph;
 
+import javax.sound.sampled.Line;
+
 import Exceptions.*;
 import Util.*;
 
@@ -113,6 +115,23 @@ public class Graph<E> {
         return res;
     }
 
+    public Object[] edges(){
+        LinkedList<Integer> edges = new LinkedList<Integer>();
+        for(VertexNode vertexNode : this.vertices){
+            for(EdgeNode edgeNode : vertexNode.adjacents){
+                if(!edges.contains(edgeNode.edge.tag)) edges.insertToBegin(edgeNode.edge.tag);
+            }
+        }
+        Object[] res = new Object[edges.length()];
+        int i = 0;
+        for(int tag : edges){
+            res[i] = tag;
+            i++;
+        }
+
+        return res;
+    }
+
     public void insertVertex(E element) throws DuplicateItemException {
         VertexNode node = new VertexNode(element);
         if(vertices.contains(node))
@@ -136,7 +155,6 @@ public class Graph<E> {
                 vertex.adjacents.remove(new EdgeNode(remove, new Edge()));
             }
             catch(Exception e) {
-                System.out.println(e.getMessage());
             }
         }
     }
@@ -320,6 +338,31 @@ public class Graph<E> {
         }
 
         return d;
+    }
+
+    public static boolean isIncluded(Graph g1, Graph g2){
+        return g1.isIncluded(g2);
+    }
+
+    public boolean isIncluded(Graph<E> g2){
+        Graph<E> g1 = this;
+        if(g1.vertices.length() < g2.vertices.length()){
+            Graph<E> aux = g1;
+            g1 = g2;
+            g2 = aux;
+        }
+        else if(g1.edges().length < g2.edges().length){
+            Graph<E> aux = g1;
+            g1 = g2;
+            g2 = aux;
+        }
+
+        int count = 0;
+        for(VertexNode vertexNode : g2.vertices){
+            if(g1.vertices.contains(vertexNode)) count++;
+        }
+        if(count != g2.vertices.length()) return false;
+        return true;
     }
     
     public String toString() {

@@ -4,7 +4,8 @@ public class Test {
     public static void main(String[] args) throws Exception {
         //graphTest();
         //dijkstra();
-        ejercicio4();
+        //ejercicio4();
+        isIncludeTest();
     }
 
     public static void graphTest() throws Exception{
@@ -135,5 +136,46 @@ public class Test {
             if(a.charAt(i) != b.charAt(i)) count++;
         }
         return count;
+    }
+
+    public static void isIncludeTest() throws Exception {
+        Graph<String> graph = new Graph<String>();
+        String[] words = {"words", "cords", "corps", "coops", "crops", "drops", "drips", "grips", "gripe", "grape", "graph"};
+
+        for(String word : words){
+            graph.insertVertex(word);
+        }
+
+        Object[] vertices = graph.vertices();
+        for(Object vertex1 : vertices){
+            for(Object vertex2 : vertices){
+                String v1 = (String) vertex1, v2 = (String) vertex2;
+                if(differentChars(v1, v2) == 1 && !graph.areAdjacent(v1, v2)){
+                    graph.insertEdge(v1, v2, 0);
+                }   
+            }
+        }
+
+        System.out.println("Graph01\n" + graph);
+
+        Graph<String> graph02 = new Graph<String>();
+        graph02.insertVertex("grape");
+        graph02.insertVertex("gripe");
+        graph02.insertVertex("grips");
+        graph02.insertVertex("drips");
+        graph02.insertEdge("grape", "gripe", 0);
+        graph02.insertEdge("gripe", "grips", 0);
+        graph02.insertEdge("grips", "drips", 0);
+        System.out.println("Graph02:\n" + graph02);
+        System.out.println("isIncluded(g1,g2): " + Graph.isIncluded(graph, graph02));
+        System.out.println("G2.insert(apples)");
+        graph02.insertVertex("apples");
+        System.out.println("isIncluded(g1,g2): " + Graph.isIncluded(graph, graph02));
+        System.out.println("G2.remove(apples)");
+        graph02.removeVertex("apples");
+        System.out.println("isIncluded(g1,g2): " + Graph.isIncluded(graph, graph02));
+        System.out.println("insertEdge(grape,drips,0)");
+        graph02.insertEdge("grape", "drips", 0);
+        System.out.println("isIncluded(g1,g2): " + Graph.isIncluded(graph, graph02));
     }
 }
