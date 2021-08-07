@@ -5,7 +5,8 @@ public class Test {
         //graphTest();
         //dijkstra();
         //ejercicio4();
-        isIncludeTest();
+        //isIncludeTest();
+        paths();
     }
 
     public static void graphTest() throws Exception{
@@ -181,5 +182,31 @@ public class Test {
         graph02.removeEdge(3);
         System.out.println(graph02);
         System.out.println("isIncluded(g1,g2): " + Graph.isIncluded(graph, graph02));
+    }
+
+    public static void paths() throws Exception {
+        Graph<String> graph = new Graph<String>();
+        graph.insertVertex("I");
+        graph.insertVertex("H");
+        graph.insertVertex("G");
+        graph.insertVertex("F");
+        graph.insertVertex("E");
+        graph.insertVertex("D");
+        graph.insertVertex("C");
+        graph.insertVertex("B");
+        graph.insertVertex("A");
+        graph.insertEdge("A", "D", 0);
+        graph.insertEdge("A", "C", 0);
+        graph.insertEdge("A", "B", 0);
+        graph.insertEdge("B", "C", 0);
+        graph.insertEdge("B", "F", 0);
+        graph.insertEdge("B", "E", 0);
+        graph.insertEdge("C", "F", 0);
+        graph.insertEdge("D", "G", 0);
+        graph.insertEdge("F", "G", 0);
+        graph.insertEdge("H", "I", 0);
+        System.out.println(graph);
+        graph.dfs();
+        graph.bfs();
     }
 }

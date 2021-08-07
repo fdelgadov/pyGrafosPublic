@@ -86,6 +86,25 @@ public class Graph<E> {
         }
     }
 
+    private class PathTreeNode {
+        public E value;
+        public LinkedList<PathTreeNode> children = new LinkedList<PathTreeNode>();
+
+        public PathTreeNode(){}
+
+        public String toString(){
+            return displayNode("");
+        }
+
+        public String displayNode(String ident){
+            String res = ident + this.value + "\n";
+            for(PathTreeNode node : this.children){
+                res += node.displayNode(ident + "    ");
+            }
+            return res;
+        }
+    }
+
     private class Edge {
         public int tag;
         public int weight;
@@ -200,17 +219,29 @@ public class Graph<E> {
     public void dfs() {
         initLabels();
 
-        for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED) dfs(vertex);
+        LinkedList<PathTreeNode> paths = new LinkedList<PathTreeNode>();
+        for(VertexNode vertex : this.vertices) if(vertex.label == UNEXPLORED){
+            PathTreeNode pathTree = new PathTreeNode();
+            dfs(vertex, pathTree);
+            paths.insertToBegin(pathTree);
+        }
+
+        for(PathTreeNode pathTree : paths){
+            System.out.println(pathTree);
+        }
     }
 
-    public void dfs(VertexNode v){
+    public void dfs(VertexNode v, PathTreeNode node){
+        node.value = v.value;
         v.label = VISITED;
         for(EdgeNode edgeNode : v.adjacents){
             if(edgeNode.edge.label == UNEXPLORED){
                 VertexNode w = this.opposite(v, edgeNode);
                 if(w.label == UNEXPLORED){
                     edgeNode.edge.label = DISCOVERY;
-                    dfs(w);
+                    PathTreeNode pathTree = new PathTreeNode();
+                    node.children.insertToBegin(pathTree);
+                    dfs(w, pathTree);
                 }
                 else edgeNode.edge.label = BACK;
             }
